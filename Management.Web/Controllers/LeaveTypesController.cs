@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using Management.Web.Constants;
 using Management.Web.Contracts;
 using Management.Web.Data;
 using Management.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Management.Web.Controllers
 {
-	public class LeaveTypesController : Controller
+    [Authorize(Roles = Roles.Administrator)]
+    public class LeaveTypesController : Controller
 	{
 		private readonly ILeaveTypeRepository _leaveTypeRepository;
 		private readonly IMapper _mapper;
@@ -39,8 +42,8 @@ namespace Management.Web.Controllers
 			return View(leaveTypeVM);
 		}
 
-		// GET: LeaveTypes/Create
-		public IActionResult Create()
+        // GET: LeaveTypes/Create
+        public IActionResult Create()
 		{
 			return View();
 		}
@@ -50,7 +53,7 @@ namespace Management.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
+        public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
 		{
 			if (ModelState.IsValid)
 			{
@@ -61,8 +64,8 @@ namespace Management.Web.Controllers
 			return View(leaveTypeVM);
 		}
 
-		// GET: LeaveTypes/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+        // GET: LeaveTypes/Edit/5
+        public async Task<IActionResult> Edit(int? id)
 		{
 			var leaveType = await _leaveTypeRepository.GetAsync(id);
 
@@ -80,7 +83,7 @@ namespace Management.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, LeaveTypeVM leaveTypeVM)
+        public async Task<IActionResult> Edit(int id, LeaveTypeVM leaveTypeVM)
 		{
 			if (id != leaveTypeVM.Id)
 			{
@@ -113,7 +116,7 @@ namespace Management.Web.Controllers
 		// POST: LeaveTypes/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			await _leaveTypeRepository.DeleteAsync(id);
 			return RedirectToAction(nameof(Index));
