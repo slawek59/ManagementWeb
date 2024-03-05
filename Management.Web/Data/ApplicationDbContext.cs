@@ -1,6 +1,7 @@
 ﻿using Management.Web.Configurations.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Management.Web.Models;
 
 namespace Management.Web.Data
 {

@@ -13,11 +13,17 @@ namespace Management.Web.Repositories
 		{
 			_context = context;
 		}
-		public async Task<T> AddAsync(T entity)
+		public async Task<T> AddAsync(T entity) 
 		{
 			await _context.AddAsync(entity);
 			await _context.SaveChangesAsync();
 			return entity;
+		}
+
+		public async Task AddRangeAsync(List<T> entities)
+		{
+			await _context.AddRangeAsync(entities);
+			await _context.SaveChangesAsync();
 		}
 
 		public async Task DeleteAsync(int id)
