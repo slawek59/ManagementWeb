@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Management.Web.Constants;
+using Management.Web.Contracts;
+using Management.Web.Data;
+using Management.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Management.Web.Data;
-using Management.Web.Models;
-using AutoMapper;
-using Management.Web.Contracts;
-using Microsoft.AspNetCore.Authorization;
-using Management.Web.Constants;
 
 namespace Management.Web.Controllers
 {

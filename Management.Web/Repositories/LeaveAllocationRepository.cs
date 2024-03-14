@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Management.Web.Constants;
 using Management.Web.Contracts;
 using Management.Web.Data;
@@ -13,16 +14,19 @@ namespace Management.Web.Repositories
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<Employee> _userManager;
 		private readonly ILeaveTypeRepository _leaveTypeRepository;
+		private readonly AutoMapper.IConfigurationProvider _configurationProvider;
 		private readonly IMapper _mapper;
 
 		public LeaveAllocationRepository(ApplicationDbContext context,
 			UserManager<Employee> userManager,
 			ILeaveTypeRepository leaveTypeRepository,
+			AutoMapper.IConfigurationProvider configurationProvider,
 			IMapper mapper) : base(context)
 		{
 			_context = context;
 			_userManager = userManager;
 			_leaveTypeRepository = leaveTypeRepository;
+			_configurationProvider = configurationProvider;
 			_mapper = mapper;
 		}
 
@@ -39,6 +43,7 @@ namespace Management.Web.Repositories
 			var allocations = await _context.LeaveAllocations
 				.Include(q => q.LeaveType)
 				.Where(q => q.EmployeeId == employeeId)
+				.ProjectTo<LeaveAllocationVM>(_configurationProvider)
 				.ToListAsync();
 
 			var employees = await _userManager.FindByIdAsync(employeeId);
