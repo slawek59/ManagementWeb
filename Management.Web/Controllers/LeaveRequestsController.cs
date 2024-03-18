@@ -1,7 +1,7 @@
-﻿using Management.Web.Constants;
-using Management.Web.Contracts;
-using Management.Web.Data;
-using Management.Web.Models;
+﻿using Management.Common.Constants;
+using Management.Application.Contracts;
+using Management.Data;
+using Management.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,11 +14,13 @@ namespace Management.Web.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly ILeaveRequestRepository _leaveRequestRepository;
+		private readonly ILogger<LeaveRequestsController> _logger;
 
-		public LeaveRequestsController(ApplicationDbContext context, ILeaveRequestRepository leaveRepository)
+		public LeaveRequestsController(ApplicationDbContext context, ILeaveRequestRepository leaveRepository, ILogger<LeaveRequestsController> logger)
 		{
 			_context = context;
 			_leaveRequestRepository = leaveRepository;
+			_logger = logger;
 		}
 
 		[Authorize(Roles = Roles.Administrator)]
@@ -58,6 +60,7 @@ namespace Management.Web.Controllers
 			}
 			catch (Exception ex)
 			{
+				_logger.LogError(ex, "Error Approving Leave Request");
 				throw;
 			}
 
@@ -84,6 +87,7 @@ namespace Management.Web.Controllers
 			}
 			catch (Exception ex)
 			{
+				_logger.LogError(ex, "Error Cancelling Leave Request");
 				throw;
 			}
 			return RedirectToAction(nameof(MyLeave));
@@ -108,6 +112,7 @@ namespace Management.Web.Controllers
 			}
 			catch (Exception ex)
 			{
+				_logger.LogError(ex, "Error Creating Leave Request");
 				ModelState.AddModelError(string.Empty, "An Error Has Occured. Please Try Again Later.");
 			}
 			model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name", model.LeaveTypeId);

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using Management.Web.Constants;
-using Management.Web.Contracts;
-using Management.Web.Data;
-using Management.Web.Models;
+using Management.Common.Constants;
+using Management.Application.Contracts;
+using Management.Data;
+using Management.Application.Repositories;
+using Management.Common.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
